@@ -41,29 +41,38 @@ class Parking:
         self.__hourly_rate = hourly_rate
         self.__cars = []
 
+    def get_max_capacity(self):
+        return self.__max_capacity
+    
+    def get_hourly_rate(self):
+        return self.__hourly_rate
+    
+    def get_cars(self):
+        return self.__cars  
+
     def park_car(self, car):
-        if len(self.__cars) < self.__max_capacity:
-            self.__cars.append(car)
+        if len(self.get_cars()) < self.get_max_capacity():
+            self.get_cars().append(car)
             print(
-                f"{car} already parked for {car.get_parked_time()} hours. Current price is ${car.calculate_parking_price(self.__hourly_rate)}")
+                f"{car} already parked for {car.get_parked_time()} hours. Current price is ${car.calculate_parking_price(self.get_hourly_rate())}")
             self.display_overflow_status()
 
     def leave_parking(self, car):
-        if car in self.__cars:
+        if car in self.get_cars():
             hours_parked = car.get_parked_time()
-            price = car.calculate_parking_price(self.__hourly_rate)
+            price = car.calculate_parking_price(self.get_hourly_rate())
             print(f"{car} left the parking. Parking duration: {hours_parked} hours. Final price: ${price}")
-            self.__cars.remove(car)
+            self.get_cars().remove(car)
 
     def display_overflow_status(self):
-        if len(self.__cars) == self.__max_capacity:
+        if self.get_cars() == self.get_max_capacity():
             print("Parking is full. No more spaces available.")
 
     def display_parking_status(self):
-        print(f"Parking status: {len(self.__cars)} out of {self.__max_capacity} cars parked.")
+        print(f"Parking status: {len(self.get_cars())} out of {self.get_max_capacity()} cars parked.")
 
     def parked_time_top(self):
-        cars_sorted_by_parked_time = sorted(self.__cars, key=lambda car: car.get_parked_time(), reverse=True)
+        cars_sorted_by_parked_time = sorted(self.get_cars(), key=lambda car: car.get_parked_time(), reverse=True)
         return cars_sorted_by_parked_time
 
 def main():
